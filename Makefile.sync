@@ -1,0 +1,42 @@
+
+##
+## Boost version configuration
+##
+
+# name of the archive file
+archive = boost_1_57_0.tar.bz2
+archive_dir = boost_1_57_0
+
+# url to fetch boost from
+archive_url = http://sourceforge.net/projects/boost/files/boost/1.57.0/$(archive)/download
+
+# md5 of the archive
+archive_md5 = 1be49befbdd9a5ce9def2983ba3e7b76
+
+##
+## extract required parts of boost
+##
+
+.PHONY: all
+all: $(archive_dir)
+	cp $(archive_dir)/LICENSE*.txt .
+	$(BCP) --boost=$(archive_dir) test .
+	$(BCP) --boost=$(archive_dir) asio .
+	$(BCP) --boost=$(archive_dir) system .
+
+##
+## NB: shouldn't need to modify anything below this line
+##
+
+# path to bcp tool
+BCP=bcp
+
+# fetch the archive
+$(archive):
+	wget -O $(archive) $(archive_url)
+	echo '$(archive_md5) *$(archive)' | md5sum -c
+
+# extract the archive (NB, the archive contains $archive_dir)
+$(archive_dir): $(archive)
+	echo '$(archive_md5) *$(archive)' | md5sum -c
+	tar jxf $(archive) $(archive_dir)
