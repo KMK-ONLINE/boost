@@ -35,6 +35,7 @@ version 4 is specifically detected.
     defined(__QNX__) || defined(__QNXNTO__) \
     )
 #   undef BOOST_OS_QNX
+#   include <sys/neutrino.h>
 #   if !defined(BOOST_OS_QNX) && defined(_NTO_VERSION)
 #       define BOOST_OS_QNX BOOST_PREDEF_MAKE_10_VVRR(_NTO_VERSION)
 #   endif
