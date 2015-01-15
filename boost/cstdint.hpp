@@ -34,6 +34,7 @@
 #endif
 
 #include <boost/config.hpp>
+#include <boost/predef/os.h>
 
 //
 // Note that GLIBC is a bit inconsistent about whether int64_t is defined or not
@@ -69,9 +70,9 @@
 
 # endif
 
-#ifdef __QNX__
+#if defined(BOOST_OS_QNX_AVAILABLE) && BOOST_OS_QNX < BOOST_VERSION_NUMBER(6,4,0)
 
-// QNX (Dinkumware stdlib) defines these as non-standard names.
+// QNX (Dinkumware stdlib) prior to 6.4.0  defines these as non-standard names.
 // Reflect to the standard names.
 
 typedef ::intleast8_t int_least8_t;
