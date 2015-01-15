@@ -72,7 +72,7 @@ typedef std::basic_ostream<char_type>                           out_stream;
 #pragma warning(disable:4996) // putenv
 #endif
 
-#ifndef UNDER_CE
+#if !defined(UNDER_CE) && !BOOST_PLAT_WINDOWS_RUNTIME
 #if defined(__COMO__) && 0
 inline void
 putenv_impl( cstring name, cstring value )
@@ -118,7 +118,7 @@ typedef const unit_test::basic_cstring<wchar_t const>           literal_cstring;
 typedef wrap_wstringstream                                      format_stream;
 typedef std::wostream                                           out_stream;
 
-#ifndef UNDER_CE
+#if !defined(UNDER_CE) && !BOOST_PLAT_WINDOWS_RUNTIME
 inline void
 putenv_impl( cstring name, cstring value )
 {

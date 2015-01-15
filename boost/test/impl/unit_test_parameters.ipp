@@ -35,7 +35,7 @@ namespace rt  = boost::runtime;
 namespace cla = rt::cla;
 
 
-#ifndef UNDER_CE
+#if !defined(UNDER_CE) && !BOOST_PLAT_WINDOWS_RUNTIME
 #include <boost/test/utils/runtime/env/variable.hpp>
 
 namespace env = rt::env;
@@ -228,7 +228,7 @@ retrieve_parameter( const_string parameter_name, cla::parser const& s_cla_parser
 
     boost::optional<T> v;
 
-#ifndef UNDER_CE
+#if !defined(UNDER_CE) && !BOOST_PLAT_WINDOWS_RUNTIME
     env::get( parameter_2_env_var[parameter_name], v );
 #endif
 
