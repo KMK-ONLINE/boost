@@ -23,6 +23,7 @@ all: $(archive_dir)
 	$(BCP) --boost=$(archive_dir) test .
 	$(BCP) --boost=$(archive_dir) asio .
 	$(BCP) --boost=$(archive_dir) system .
+	$(BCP) --boost=$(archive_dir) filesystem .
 
 ##
 ## NB: shouldn't need to modify anything below this line
@@ -37,6 +38,6 @@ $(archive):
 	echo '$(archive_md5) *$(archive)' | md5sum -c
 
 # extract the archive (NB, the archive contains $archive_dir)
-$(archive_dir): $(archive)
+$(archive_dir): | $(archive)
 	echo '$(archive_md5) *$(archive)' | md5sum -c
 	tar jxf $(archive) $(archive_dir)
