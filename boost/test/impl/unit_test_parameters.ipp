@@ -248,6 +248,10 @@ init( int& argc, char** argv )
     using namespace cla;
 
     try {
+        // reset in case of multiple invocation
+        s_cla_parser.~parser();
+        new (&s_cla_parser) cla::parser();
+
         s_cla_parser - cla::ignore_mismatch
           << cla::dual_name_parameter<bool>( AUTO_START_DBG + "|d" )
             - (cla::prefix = "--|-",cla::separator = "=| ",cla::guess_name,cla::optional,
@@ -367,9 +371,7 @@ report_level()
 const_string
 test_to_run()
 {
-    static std::string s_test_to_run = retrieve_parameter( TESTS_TO_RUN, s_cla_parser, s_empty );
-
-    return s_test_to_run;
+    return retrieve_parameter( TESTS_TO_RUN, s_cla_parser, s_empty );
 }
 
 //____________________________________________________________________________//
@@ -377,9 +379,7 @@ test_to_run()
 const_string
 break_exec_path()
 {
-    static std::string s_break_exec_path = retrieve_parameter( BREAK_EXEC_PATH, s_cla_parser, s_empty );
-
-    return s_break_exec_path;
+    return retrieve_parameter( BREAK_EXEC_PATH, s_cla_parser, s_empty );
 }
 
 //____________________________________________________________________________//
