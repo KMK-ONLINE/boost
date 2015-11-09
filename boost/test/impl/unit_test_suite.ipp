@@ -198,7 +198,12 @@ traverse_test_tree( test_case const& tc, test_tree_visitor& V )
 void
 traverse_test_tree( test_suite const& suite, test_tree_visitor& V )
 {
-    if( !suite.p_enabled || !V.test_suite_start( suite ) )
+    /* Skip visiting any sub-nodes of a disabled node, except if visitor
+     * explicitly wants to visit disabled nodes */
+    if( !V.can_visit_disabled() && !suite.p_enabled )
+        return;
+
+    if( !V.test_suite_start( suite ) )
         return;
 
     try {

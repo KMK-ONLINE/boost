@@ -167,6 +167,24 @@ private:
 };
 
 // ************************************************************************** //
+// **************                 test_case_filter             ************** //
+// ************************************************************************** //
+
+/**
+ * visitor that re-enables all test units/cases in a test tree
+ */
+class test_case_reseter : public test_tree_visitor {
+    virtual bool    can_visit_disabled() { return true; }
+    virtual bool    test_suite_start( test_suite const& ts ) {
+        ts.p_enabled.value = true;
+        return true;
+    }
+    virtual void    visit( test_case const& tc ) {
+        tc.p_enabled.value = true;
+    }
+};
+
+// ************************************************************************** //
 // **************                  unit_test_main              ************** //
 // ************************************************************************** //
 
@@ -175,6 +193,10 @@ unit_test_main( init_unit_test_func init_func, int argc, char* argv[] )
 {
     try {
         framework::init( init_func, argc, argv );
+
+        /* clear any pre-existing filtering prior to test */
+        test_case_reseter resetter;
+        traverse_test_tree( framework::master_test_suite().p_id, resetter );
 
         if( !runtime_config::test_to_run().is_empty() ) {
             test_case_filter filter( runtime_config::test_to_run() );

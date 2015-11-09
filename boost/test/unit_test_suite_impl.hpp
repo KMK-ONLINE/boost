@@ -176,6 +176,8 @@ public:
     virtual void    visit( test_case const& )               {}
     virtual bool    test_suite_start( test_suite const& )   { return true; }
     virtual void    test_suite_finish( test_suite const& )  {}
+    /** Visitor wants to recurse into disabled nodes */
+    virtual bool    can_visit_disabled()                    { return false; }
 
 protected:
     BOOST_TEST_PROTECTED_VIRTUAL ~test_tree_visitor() {}
