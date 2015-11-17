@@ -371,7 +371,9 @@ report_level()
 const_string
 test_to_run()
 {
-    return retrieve_parameter( TESTS_TO_RUN, s_cla_parser, s_empty );
+    static std::string s; // NB: const_string is a reference to storage
+    s = retrieve_parameter( TESTS_TO_RUN, s_cla_parser, s_empty );
+    return s;
 }
 
 //____________________________________________________________________________//
@@ -379,7 +381,9 @@ test_to_run()
 const_string
 break_exec_path()
 {
-    return retrieve_parameter( BREAK_EXEC_PATH, s_cla_parser, s_empty );
+    static std::string s; // NB: const_string is a reference to storage
+    s = retrieve_parameter( BREAK_EXEC_PATH, s_cla_parser, s_empty );
+    return s;
 }
 
 //____________________________________________________________________________//
